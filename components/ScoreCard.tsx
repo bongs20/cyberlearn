@@ -133,7 +133,7 @@ export default function ScoreCard({
           {feedback.badge}
         </span>
         <p className="text-sm text-slate-700 leading-relaxed font-medium px-4">
-          "{feedback.text}"
+          &quot;{feedback.text}&quot;
         </p>
       </div>
 

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import LearningCard from "@/components/LearningCard";
 import ProgressBar from "@/components/ProgressBar";
-import { CircleHelp, BookOpen, PlayCircle, Lightbulb, ClipboardCheck, Award, Home } from "lucide-react";
+import { CircleHelp, BookOpen, PlayCircle, ClipboardCheck, Award, Home } from "lucide-react";
 
 export default function DashboardPage() {
   const [progress, setProgress] = useState({
@@ -15,21 +15,24 @@ export default function DashboardPage() {
   });
 
   useEffect(() => {
-    // Read local progress state if saved
-    const savedQuizScore = localStorage.getItem("cyberlearn_quiz_score");
-    const savedCasesCount = localStorage.getItem("cyberlearn_cases_count");
-    const savedMateriCount = localStorage.getItem("cyberlearn_materi_count");
+    const timeoutId = window.setTimeout(() => {
+      const savedQuizScore = localStorage.getItem("cyberlearn_quiz_score");
+      const savedCasesCount = localStorage.getItem("cyberlearn_cases_count");
+      const savedMateriCount = localStorage.getItem("cyberlearn_materi_count");
 
-    const quizScoreNum = savedQuizScore ? parseInt(savedQuizScore, 10) : 0;
-    const casesCountNum = savedCasesCount ? parseInt(savedCasesCount, 10) : 0;
-    const materiCountNum = savedMateriCount ? parseInt(savedMateriCount, 10) : 0;
+      const quizScoreNum = savedQuizScore ? parseInt(savedQuizScore, 10) : 0;
+      const casesCountNum = savedCasesCount ? parseInt(savedCasesCount, 10) : 0;
+      const materiCountNum = savedMateriCount ? parseInt(savedMateriCount, 10) : 0;
 
-    setProgress({
-      materiPercent: Math.min(100, Math.round((materiCountNum / 4) * 100)),
-      casesSolved: casesCountNum,
-      quizScore: quizScoreNum,
-      quizTaken: savedQuizScore !== null,
-    });
+      setProgress({
+        materiPercent: Math.min(100, Math.round((materiCountNum / 4) * 100)),
+        casesSolved: casesCountNum,
+        quizScore: quizScoreNum,
+        quizTaken: savedQuizScore !== null,
+      });
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
   }, []);
 
   return (

@@ -143,7 +143,7 @@ export default function ThreatDetailTemplate({ material }: ThreatDetailTemplateP
           <div className="space-y-2">
             <h3 className="font-bold text-base text-white">{material.example.scenario}</h3>
             <p className="text-xs sm:text-sm text-blue-100 leading-relaxed bg-white/10 p-4 rounded-xl border border-white/10">
-              "{material.example.detail}"
+              &quot;{material.example.detail}&quot;
             </p>
           </div>
         </div>

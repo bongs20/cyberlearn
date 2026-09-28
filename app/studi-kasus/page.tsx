@@ -17,22 +17,29 @@ function StudiKasusContent() {
   const [solvedCount, setSolvedCount] = useState<number>(0);
 
   useEffect(() => {
-    if (categoryParam) {
-      // Find matching category tab if category query string exists
-      const matched = categories.find(
-        (cat) => cat.toLowerCase() === categoryParam.toLowerCase()
-      );
-      if (matched) {
-        setActiveTab(matched);
+    const timeoutId = window.setTimeout(() => {
+      if (categoryParam) {
+        const matched = categories.find(
+          (cat) => cat.toLowerCase() === categoryParam.toLowerCase()
+        );
+        if (matched) {
+          setActiveTab(matched);
+        }
       }
-    }
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
   }, [categoryParam]);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    const timeoutId = window.setTimeout(() => {
       const saved = localStorage.getItem("cyberlearn_cases_count");
-      if (saved) setSolvedCount(parseInt(saved, 10));
-    }
+      if (saved) {
+        setSolvedCount(parseInt(saved, 10));
+      }
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
   }, []);
 
   const handleCaseSolved = () => {

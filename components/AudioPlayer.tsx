@@ -23,10 +23,6 @@ export default function AudioPlayer({
   const audioCtxRef = useRef<AudioContext | null>(null);
   const sourceNodeRef = useRef<MediaElementAudioSourceNode | null>(null);
 
-  useEffect(() => {
-    stopAll();
-  }, [audioPath, narrationText]);
-
   const setupWebAudioFilter = () => {
     if (!audioRef.current || audioCtxRef.current) return;
 
@@ -80,6 +76,12 @@ export default function AudioPlayer({
     setIsSpeechActive(false);
     setIsRealAudioPlaying(false);
   };
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(stopAll, 0);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [audioPath, narrationText]);
 
   const togglePlay = () => {
     if (isPlaying) {

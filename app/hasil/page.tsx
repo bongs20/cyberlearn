@@ -10,7 +10,7 @@ export default function HasilPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    const timeoutId = window.setTimeout(() => {
       const savedScore = localStorage.getItem("cyberlearn_quiz_score");
       const savedCorrect = localStorage.getItem("cyberlearn_quiz_correct");
 
@@ -18,7 +18,9 @@ export default function HasilPage() {
         setScore(parseInt(savedScore, 10));
         setCorrectCount(savedCorrect ? parseInt(savedCorrect, 10) : Math.round(parseInt(savedScore, 10) / 10));
       }
-    }
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
   }, []);
 
   const handleRetry = () => {
