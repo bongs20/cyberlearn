@@ -1,6 +1,6 @@
 import Link from "next/link";
 import ThreatCard from "@/components/ThreatCard";
-import { BookOpen, ArrowLeft, ShieldAlert, KeyRound, Bug, Users, Volume2 } from "lucide-react";
+import { BookOpen, ArrowLeft, ShieldAlert, KeyRound, Bug, Users } from "lucide-react";
 import { MATERIALS_DATA } from "@/data/materials";
 
 export default function MateriOverviewPage() {

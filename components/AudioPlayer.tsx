@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Volume2, VolumeX, Play, Pause, RefreshCw, Sparkles } from "lucide-react";
+import { Volume2, VolumeX, Play, Pause, RefreshCw } from "lucide-react";
 
 interface AudioPlayerProps {
   audioPath?: string;
@@ -17,52 +17,7 @@ export default function AudioPlayer({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isSpeechActive, setIsSpeechActive] = useState(false);
   const [isRealAudioPlaying, setIsRealAudioPlaying] = useState(false);
-  const [isEnhanced, setIsEnhanced] = useState(false);
-
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const audioCtxRef = useRef<AudioContext | null>(null);
-  const sourceNodeRef = useRef<MediaElementAudioSourceNode | null>(null);
-
-  const setupWebAudioFilter = () => {
-    if (!audioRef.current || audioCtxRef.current) return;
-
-    try {
-      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      const ctx = new AudioCtx();
-      audioCtxRef.current = ctx;
-
-      const source = ctx.createMediaElementSource(audioRef.current);
-      sourceNodeRef.current = source;
-
-      // Filter 1: Highpass to eliminate low-frequency room noise & mic rumble (< 80Hz)
-      const highPass = ctx.createBiquadFilter();
-      highPass.type = "highpass";
-      highPass.frequency.value = 80;
-
-      // Filter 2: Peaking filter to enhance vocal presence & clarity (3000Hz)
-      const vocalClarity = ctx.createBiquadFilter();
-      vocalClarity.type = "peaking";
-      vocalClarity.frequency.value = 3000;
-      vocalClarity.Q.value = 1.2;
-      vocalClarity.gain.value = 3.5;
-
-      // Compressor: Smooth out volume spikes and normalize voice levels
-      const compressor = ctx.createDynamicsCompressor();
-      compressor.threshold.value = -24;
-      compressor.knee.value = 30;
-      compressor.ratio.value = 12;
-      compressor.attack.value = 0.003;
-      compressor.release.value = 0.25;
-
-      // Connect nodes: Source -> HighPass -> VocalClarity -> Compressor -> Output
-      source.connect(highPass);
-      highPass.connect(vocalClarity);
-      vocalClarity.connect(compressor);
-      compressor.connect(ctx.destination);
-    } catch (e) {
-      console.log("Web Audio API Filter not supported or already attached:", e);
-    }
-  };
 
   const stopAll = () => {
     if (audioRef.current) {

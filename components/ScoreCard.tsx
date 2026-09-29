@@ -21,6 +21,8 @@ export default function ScoreCard({
   const winAudioRef = useRef<HTMLAudioElement | null>(null);
   
   useEffect(() => {
+    const winAudio = winAudioRef.current;
+
     if (score >= 75) {
       // Trigger confetti animation for high scores
       confetti({
@@ -45,19 +47,19 @@ export default function ScoreCard({
       }
     }
 
-    if (winAudioRef.current) {
-      winAudioRef.current.currentTime = 0;
-      winAudioRef.current.volume = 0.45;
-      void winAudioRef.current.play().catch(() => undefined);
+    if (winAudio) {
+      winAudio.currentTime = 0;
+      winAudio.volume = 0.45;
+      void winAudio.play().catch(() => undefined);
     }
 
     return () => {
       if (typeof window !== "undefined" && "speechSynthesis" in window) {
         window.speechSynthesis.cancel();
       }
-      if (winAudioRef.current) {
-        winAudioRef.current.pause();
-        winAudioRef.current.currentTime = 0;
+      if (winAudio) {
+        winAudio.pause();
+        winAudio.currentTime = 0;
       }
     };
   }, [score]);

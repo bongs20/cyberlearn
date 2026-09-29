@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Shield, Lock, Laptop, ArrowRight, BookOpenCheck, CheckCircle2, Sparkles, AlertCircle } from "lucide-react";
+import { Shield, Lock, Laptop, ArrowRight, BookOpenCheck, Sparkles } from "lucide-react";
 import WelcomeAudio from "@/components/WelcomeAudio";
 
 export default function LandingPage() {

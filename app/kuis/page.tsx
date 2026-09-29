@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import QuizQuestion from "@/components/QuizQuestion";
 import ScoreCard from "@/components/ScoreCard";
 import QuizAtmosphere from "@/components/QuizAtmosphere";
@@ -15,8 +14,6 @@ export default function KuisPage() {
   const [hasStarted, setHasStarted] = useState(false);
   const [finalScore, setFinalScore] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
-
-  const router = useRouter();
 
   const handleNextQuestion = (selectedAnswerId: string) => {
     const question = QUIZ_QUESTIONS[currentIndex];

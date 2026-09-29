@@ -7,11 +7,11 @@ import CaseStudyCard from "@/components/CaseStudyCard";
 import { CASE_STUDIES } from "@/data/cases";
 import { Lightbulb, ArrowLeft, CheckCircle2, Filter } from "lucide-react";
 
+const categories = ["Semua Kasus", "Phishing", "Malware", "Password Attack", "Social Engineering"];
+
 function StudiKasusContent() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category");
-
-  const categories = ["Semua Kasus", "Phishing", "Malware", "Password Attack", "Social Engineering"];
 
   const [activeTab, setActiveTab] = useState<string>("Semua Kasus");
   const [solvedCount, setSolvedCount] = useState<number>(0);

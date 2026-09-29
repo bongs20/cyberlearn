@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import FloatingCyberBackground from "@/components/FloatingCyberBackground";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,7 +16,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" className="scroll-smooth">
-      <body className="min-h-screen flex flex-col bg-[#EAF5FF] text-slate-800 antialiased selection:bg-cyan-300 selection:text-slate-900">
+      <body className="min-h-screen flex flex-col bg-[#EAF5FF] text-slate-800 antialiased selection:bg-cyan-300 selection:text-slate-900 relative">
+        <FloatingCyberBackground />
         <Navbar />
         <main className="relative z-10 flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {children}

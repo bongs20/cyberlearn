@@ -16,7 +16,6 @@ export default function ThreatDetailTemplate({ material }: ThreatDetailTemplateP
   useEffect(() => {
     // Save progress in localStorage when user views detail page
     if (typeof window !== "undefined") {
-      const currentCount = parseInt(localStorage.getItem("cyberlearn_materi_count") || "0", 10);
       const readSet = JSON.parse(localStorage.getItem("cyberlearn_read_materi") || "[]");
       if (!readSet.includes(material.id)) {
         readSet.push(material.id);
