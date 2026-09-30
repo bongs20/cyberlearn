@@ -29,6 +29,7 @@ export default function Footer() {
               <li><Link href="/materi" className="hover:text-cyan-300 transition-colors">Materi Ancaman Siber</Link></li>
               <li><Link href="/studi-kasus" className="hover:text-cyan-300 transition-colors">Studi Kasus Interaktif</Link></li>
               <li><Link href="/kuis" className="hover:text-cyan-300 transition-colors">Kuis & Evaluasi</Link></li>
+              <li><Link href="/storyboard" className="text-cyan-400 font-semibold hover:underline flex items-center gap-1">🎬 Storyboard Visual</Link></li>
             </ul>
           </div>
 
