@@ -29,30 +29,40 @@ export default function ThreatDetailTemplate({ material }: ThreatDetailTemplateP
     <div className="space-y-8 py-4">
       
       {/* Top Navigation & Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm">
-        <div className="flex items-center gap-4">
-          <div className="material-visual relative h-32 min-h-[8rem] w-44 min-w-[11rem] flex-shrink-0 overflow-hidden rounded-3xl bg-slate-100 sm:h-36 sm:min-h-[9rem] sm:w-52 sm:min-w-[13rem]">
+      <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+        {/* Hero: Gambar + Info */}
+        <div className="flex flex-col sm:flex-row items-center gap-0 sm:gap-6 p-6 sm:p-8">
+          {/* Image */}
+          <div className="material-visual relative w-full sm:w-52 sm:flex-shrink-0 aspect-[4/3] sm:aspect-auto sm:h-40 overflow-hidden rounded-2xl bg-slate-100">
             <Image
               src={material.imagePath}
               alt={`Ilustrasi ${material.title}`}
               fill
               priority
-              sizes="(min-width: 640px) 160px, 128px"
+              sizes="(min-width: 640px) 208px, 100vw"
               className="material-image object-contain"
             />
           </div>
-          <div className="space-y-1">
-            <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-100 text-blue-800 uppercase tracking-wider">
-              Detail Materi #{material.id}
+
+          {/* Title & Badge */}
+          <div className="space-y-2 w-full mt-4 sm:mt-0 text-center sm:text-left">
+            <span className="inline-block text-xs font-bold px-3 py-1 rounded-full bg-blue-100 text-blue-800 uppercase tracking-wider">
+              Detail Materi
             </span>
-            <h1 className="text-3xl font-extrabold text-[#17324D]">{material.title}</h1>
+            <h1 className="text-3xl sm:text-4xl font-black text-[#17324D] leading-tight">
+              {material.title}
+            </h1>
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        {/* Divider */}
+        <div className="border-t border-slate-100 mx-6" />
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 p-4 sm:p-6">
           <Link
             href="/materi"
-            className="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-[#17324D] font-bold text-xs border border-slate-200 hover:border-blue-400 shadow-sm hover:shadow-md transition-all hover:scale-105 inline-flex items-center gap-2 group"
+            className="flex-1 sm:flex-none px-5 py-3 rounded-xl bg-white hover:bg-slate-50 text-[#17324D] font-bold text-sm border-2 border-slate-200 hover:border-blue-400 shadow-sm hover:shadow-md transition-all inline-flex items-center justify-center gap-2 group"
           >
             <ArrowLeft className="w-4 h-4 text-blue-600 group-hover:-translate-x-1 transition-transform" />
             <span>Kembali ke Materi</span>
@@ -60,7 +70,7 @@ export default function ThreatDetailTemplate({ material }: ThreatDetailTemplateP
 
           <Link
             href={`/studi-kasus?category=${encodeURIComponent(material.title)}`}
-            className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md transition-all hover:scale-105 inline-flex items-center gap-2"
+            className="flex-1 px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md transition-all hover:scale-[1.02] inline-flex items-center justify-center gap-2"
           >
             <Lightbulb className="w-4 h-4 text-yellow-300" />
             <span>Studi Kasus {material.title}</span>

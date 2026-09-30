@@ -39,9 +39,9 @@ export default function DashboardPage() {
     <div className="space-y-10 py-4">
       
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-[#17324D] to-blue-900 rounded-3xl p-8 sm:p-10 text-white shadow-xl border border-blue-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        <div className="space-y-3">
-          <div className="flex items-center gap-2">
+      <div className="bg-gradient-to-r from-[#17324D] to-blue-900 rounded-3xl p-6 sm:p-8 md:p-10 text-white shadow-xl border border-blue-800 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-6">
+        <div className="space-y-3 w-full md:w-auto">
+          <div className="flex flex-wrap items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-cyan-400 bg-blue-950/80 px-3 py-1 rounded-full border border-blue-700/60">
               DASHBOARD PEMBELAJARAN
             </span>
@@ -53,7 +53,7 @@ export default function DashboardPage() {
               <span>Kembali ke Beranda</span>
             </Link>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-white">Mari Mulai Belajar! 👋</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white">Mari Mulai Belajar! 👋</h1>
           <p className="text-sm text-blue-100 max-w-xl leading-relaxed">
             Jelajahi materi, simak video, selesaikan studi kasus, dan uji pemahamanmu melalui kuis.
           </p>
@@ -61,10 +61,12 @@ export default function DashboardPage() {
 
         {/* Quick Quiz Result Badge if completed */}
         {progress.quizTaken && (
-          <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 text-center min-w-[180px] shadow-lg">
-            <span className="text-[11px] font-bold text-cyan-300 uppercase tracking-wider">Nilai Kuis Terakhir</span>
-            <div className="text-4xl font-extrabold text-white mt-1">{progress.quizScore}</div>
-            <span className="text-[10px] text-blue-200">dari 100 poin</span>
+          <div className="w-full md:w-auto md:flex-shrink-0 flex justify-center">
+            <div className="bg-white/10 backdrop-blur-md px-8 py-5 rounded-2xl border border-white/20 text-center w-[200px] shadow-lg">
+              <span className="text-[11px] font-bold text-cyan-300 uppercase tracking-wider block">Nilai Kuis Terakhir</span>
+              <div className="text-5xl font-extrabold text-white mt-2">{progress.quizScore}</div>
+              <span className="text-[11px] text-blue-200 mt-1 block">dari 100 poin</span>
+            </div>
           </div>
         )}
       </div>
