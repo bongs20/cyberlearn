@@ -76,7 +76,7 @@ export default function ThreatCard({
           </span>
         </div>
 
-        <h3 className="text-lg sm:text-xl font-bold text-[#17324D] mb-2">
+        <h3 className="min-w-0 break-words text-lg sm:text-xl font-bold text-[#17324D] mb-2">
           {title}
         </h3>
 

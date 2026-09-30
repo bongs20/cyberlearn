@@ -31,9 +31,9 @@ export default function ThreatDetailTemplate({ material }: ThreatDetailTemplateP
     <div className="space-y-8 py-4">
       
       {/* Top Navigation & Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm">
-        <div className="flex items-center gap-4">
-          <div className="material-visual relative h-32 min-h-[8rem] w-44 min-w-[11rem] flex-shrink-0 overflow-hidden rounded-3xl bg-slate-100 sm:h-36 sm:min-h-[9rem] sm:w-52 sm:min-w-[13rem]">
+      <div className="flex flex-col items-stretch gap-5 bg-white p-4 sm:p-8 rounded-3xl border border-slate-200 shadow-sm">
+        <div className="flex min-w-0 flex-col items-center gap-4 sm:flex-row sm:items-center">
+          <div className="material-visual relative h-32 min-h-[8rem] w-full max-w-xs flex-shrink-0 overflow-hidden rounded-3xl bg-slate-100 sm:h-36 sm:min-h-[9rem] sm:w-52 sm:max-w-none">
             <Image
               src={material.imagePath}
               alt={`Ilustrasi ${material.title}`}
@@ -43,19 +43,21 @@ export default function ThreatDetailTemplate({ material }: ThreatDetailTemplateP
               className="material-image object-contain"
             />
           </div>
-          <div className="space-y-1">
-            <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-100 text-blue-800 uppercase tracking-wider">
+          <div className="min-w-0 space-y-2 text-center sm:text-left">
+            <span className="inline-block max-w-full whitespace-normal text-xs font-bold px-3 py-1 rounded-full bg-blue-100 text-blue-800 uppercase tracking-wider">
               Detail Materi
             </span>
-            <h1 className="text-3xl font-extrabold text-[#17324D]">{material.title}</h1>
+            <h1 className="break-words text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#17324D] leading-tight">
+              {material.title}
+            </h1>
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex w-full flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-end">
           <Link
             href="/materi"
             onClick={playClick}
-            className="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-[#17324D] font-bold text-xs border border-slate-200 hover:border-blue-400 shadow-sm hover:shadow-md transition-all hover:scale-105 inline-flex items-center gap-2 group"
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-center text-xs font-bold text-[#17324D] shadow-sm transition-all hover:scale-105 hover:border-blue-400 hover:bg-slate-50 hover:shadow-md group sm:flex-1"
           >
             <ArrowLeft className="w-4 h-4 text-blue-600 group-hover:-translate-x-1 transition-transform" />
             <span>Kembali ke Materi</span>
@@ -64,10 +66,10 @@ export default function ThreatDetailTemplate({ material }: ThreatDetailTemplateP
           <Link
             href={`/studi-kasus?category=${encodeURIComponent(material.title)}`}
             onClick={playSelect}
-            className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md transition-all hover:scale-105 inline-flex items-center gap-2"
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-center text-xs font-bold text-white shadow-md transition-all hover:scale-105 hover:bg-blue-700 sm:flex-1"
           >
             <Lightbulb className="w-4 h-4 text-yellow-300" />
-            <span>Studi Kasus {material.title}</span>
+            <span className="break-words">Studi Kasus {material.title}</span>
           </Link>
         </div>
       </div>
@@ -84,9 +86,9 @@ export default function ThreatDetailTemplate({ material }: ThreatDetailTemplateP
         
         {/* Apa itu? */}
         <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-          <div className="flex items-center gap-2 text-blue-600 font-bold text-lg border-b border-slate-100 pb-3">
+          <div className="flex min-w-0 items-start gap-2 border-b border-slate-100 pb-3 text-blue-600 font-bold text-base sm:text-lg">
             <HelpCircle className="w-5 h-5 text-blue-600" />
-            <h2 className="text-[#17324D]">Apa itu {material.title}?</h2>
+            <h2 className="min-w-0 break-words text-[#17324D]">Apa itu {material.title}?</h2>
           </div>
           <p className="text-sm text-slate-700 leading-relaxed font-medium">
             {material.definition}
@@ -95,9 +97,9 @@ export default function ThreatDetailTemplate({ material }: ThreatDetailTemplateP
 
         {/* Bagaimana cara kerjanya? */}
         <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-          <div className="flex items-center gap-2 text-purple-600 font-bold text-lg border-b border-slate-100 pb-3">
+          <div className="flex min-w-0 items-start gap-2 border-b border-slate-100 pb-3 text-base font-bold text-purple-600 sm:text-lg">
             <Layers className="w-5 h-5 text-purple-600" />
-            <h2 className="text-[#17324D]">Bagaimana cara kerjanya?</h2>
+            <h2 className="min-w-0 break-words text-[#17324D]">Bagaimana cara kerjanya?</h2>
           </div>
           <ul className="space-y-2.5">
             {material.howItWorks.map((step, idx) => (
@@ -118,9 +120,9 @@ export default function ThreatDetailTemplate({ material }: ThreatDetailTemplateP
         
         {/* Ciri-ciri */}
         <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-          <div className="flex items-center gap-2 text-amber-600 font-bold text-lg border-b border-slate-100 pb-3">
+          <div className="flex min-w-0 items-start gap-2 border-b border-slate-100 pb-3 text-base font-bold text-amber-600 sm:text-lg">
             <AlertTriangle className="w-5 h-5 text-amber-600" />
-            <h2 className="text-[#17324D]">Ciri-ciri yang perlu diperhatikan</h2>
+            <h2 className="min-w-0 break-words text-[#17324D]">Ciri-ciri yang perlu diperhatikan</h2>
           </div>
           <ul className="space-y-2.5">
             {material.characteristics.map((item, idx) => (
@@ -160,7 +162,7 @@ export default function ThreatDetailTemplate({ material }: ThreatDetailTemplateP
             <ShieldCheck className="w-6 h-6" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-emerald-950">Cara Melindungi Diri Dari {material.title}</h2>
+            <h2 className="break-words text-lg font-bold text-emerald-950 sm:text-xl">Cara Melindungi Diri Dari {material.title}</h2>
             <p className="text-xs text-emerald-700">Terapkan langkah-langkah pencegahan praktis berikut ini:</p>
           </div>
         </div>
