@@ -32,8 +32,8 @@ export default function ThreatDetailTemplate({ material }: ThreatDetailTemplateP
       
       {/* Top Navigation & Header */}
       <div className="flex flex-col items-stretch gap-5 bg-white p-4 sm:p-8 rounded-3xl border border-slate-200 shadow-sm">
-        <div className="flex min-w-0 flex-col items-center gap-4 sm:flex-row sm:items-center">
-          <div className="material-visual relative h-32 min-h-[8rem] w-full max-w-xs flex-shrink-0 overflow-hidden rounded-3xl bg-slate-100 sm:h-36 sm:min-h-[9rem] sm:w-52 sm:max-w-none">
+        <div className="flex min-w-0 flex-row items-center gap-3 sm:gap-4">
+          <div className="material-visual relative h-24 min-h-[6rem] w-32 min-w-[8rem] flex-shrink-0 overflow-hidden rounded-3xl bg-slate-100 sm:h-36 sm:min-h-[9rem] sm:w-52 sm:min-w-0">
             <Image
               src={material.imagePath}
               alt={`Ilustrasi ${material.title}`}
@@ -43,11 +43,11 @@ export default function ThreatDetailTemplate({ material }: ThreatDetailTemplateP
               className="material-image object-contain"
             />
           </div>
-          <div className="min-w-0 space-y-2 text-center sm:text-left">
+          <div className="min-w-0 space-y-2 text-left">
             <span className="inline-block max-w-full whitespace-normal text-xs font-bold px-3 py-1 rounded-full bg-blue-100 text-blue-800 uppercase tracking-wider">
               Detail Materi
             </span>
-            <h1 className="break-words text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#17324D] leading-tight">
+            <h1 className="break-words text-xl sm:text-3xl md:text-4xl font-extrabold text-[#17324D] leading-tight">
               {material.title}
             </h1>
           </div>
