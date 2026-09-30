@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import confetti from "canvas-confetti";
 import { Trophy, RefreshCw, LayoutDashboard, CheckCircle, BookOpen } from "lucide-react";
+import { useSound } from "@/hooks/useSound";
 
 interface ScoreCardProps {
   score: number;
@@ -18,13 +19,10 @@ export default function ScoreCard({
   totalCount,
   onRetry,
 }: ScoreCardProps) {
-  const winAudioRef = useRef<HTMLAudioElement | null>(null);
-  
-  useEffect(() => {
-    const winAudio = winAudioRef.current;
+  const { playComplete, playClick } = useSound();
 
+  useEffect(() => {
     if (score >= 75) {
-      // Trigger confetti animation for high scores
       confetti({
         particleCount: 100,
         spread: 70,
@@ -32,10 +30,14 @@ export default function ScoreCard({
       });
     }
 
+    // Play complete sound effect
+    playComplete();
+
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
-      const message = score > 80
-        ? `Yeay! Nilai kamu ${score}. Kerja bagus dan pertahankan pemahaman keamanan sibernya!`
-        : null;
+      const message =
+        score > 80
+          ? `Yeay! Nilai kamu ${score}. Kerja bagus dan pertahankan pemahaman keamanan sibernya!`
+          : null;
 
       if (message) {
         window.speechSynthesis.cancel();
@@ -47,21 +49,12 @@ export default function ScoreCard({
       }
     }
 
-    if (winAudio) {
-      winAudio.currentTime = 0;
-      winAudio.volume = 0.45;
-      void winAudio.play().catch(() => undefined);
-    }
-
     return () => {
       if (typeof window !== "undefined" && "speechSynthesis" in window) {
         window.speechSynthesis.cancel();
       }
-      if (winAudio) {
-        winAudio.pause();
-        winAudio.currentTime = 0;
-      }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [score]);
 
   const getFeedback = (scoreVal: number) => {
@@ -96,7 +89,6 @@ export default function ScoreCard({
 
   return (
     <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-2xl text-center max-w-2xl mx-auto space-y-8 animate-in zoom-in-95 duration-300">
-      <audio ref={winAudioRef} src="/audio/menang.mp3" preload="auto" />
       
       {/* Trophy Badge */}
       <div className="relative inline-block">
@@ -142,7 +134,7 @@ export default function ScoreCard({
       {/* Action Buttons */}
       <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
         <button
-          onClick={onRetry}
+          onClick={() => { playClick(); onRetry(); }}
           className="w-full sm:w-auto px-6 py-3.5 rounded-xl font-bold text-sm bg-blue-600 hover:bg-blue-700 text-white shadow-lg transition-all hover:scale-105 flex items-center justify-center gap-2"
         >
           <RefreshCw className="w-4 h-4" />
@@ -151,6 +143,7 @@ export default function ScoreCard({
 
         <Link
           href="/materi"
+          onClick={playClick}
           className="w-full sm:w-auto px-6 py-3.5 rounded-xl font-bold text-sm bg-slate-100 hover:bg-slate-200 text-slate-800 transition-all flex items-center justify-center gap-2"
         >
           <BookOpen className="w-4 h-4" />
@@ -159,6 +152,7 @@ export default function ScoreCard({
 
         <Link
           href="/dashboard"
+          onClick={playClick}
           className="w-full sm:w-auto px-6 py-3.5 rounded-xl font-bold text-sm bg-[#17324D] hover:bg-slate-900 text-white shadow-md transition-all flex items-center justify-center gap-2"
         >
           <LayoutDashboard className="w-4 h-4 text-cyan-400" />

@@ -4,10 +4,13 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Shield, Lock, Menu, X, BookOpen, PlayCircle, Lightbulb, ClipboardCheck, LayoutDashboard, Home } from "lucide-react";
+import SoundToggle from "@/components/SoundToggle";
+import { useSound } from "@/hooks/useSound";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const { playClick } = useSound();
 
   const navLinks = [
     { name: "Beranda", href: "/", icon: Home },
@@ -31,7 +34,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           
           {/* Logo & Branding */}
-          <Link href="/" className="flex items-center gap-2.5 group">
+          <Link href="/" className="flex items-center gap-2.5 group" onClick={playClick}>
             <div className="p-2 rounded-xl bg-blue-600/90 text-cyan-300 shadow-md group-hover:scale-105 transition-transform">
               <Shield className="w-6 h-6" />
             </div>
@@ -53,6 +56,7 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
+                  onClick={playClick}
                   className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
                     active
                       ? "bg-blue-600 text-white shadow-md font-semibold"
@@ -64,12 +68,18 @@ export default function Navbar() {
                 </Link>
               );
             })}
+
+            {/* Sound Toggle */}
+            <div className="ml-2 border-l border-white/10 pl-2">
+              <SoundToggle />
+            </div>
           </div>
 
-          {/* Mobile Hamburger Button */}
-          <div className="flex md:hidden">
+          {/* Mobile: Sound Toggle + Hamburger */}
+          <div className="flex md:hidden items-center gap-2">
+            <SoundToggle />
             <button
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => { setIsOpen(!isOpen); playClick(); }}
               className="p-2 rounded-lg text-blue-100 hover:bg-white/10 focus:outline-none"
               aria-label="Toggle Navigation Menu"
             >
@@ -90,7 +100,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                onClick={() => setIsOpen(false)}
+                onClick={() => { setIsOpen(false); playClick(); }}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
                   active
                     ? "bg-blue-600 text-white font-semibold"

@@ -1,7 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import { CircleHelp, ArrowLeft, CheckCircle2, Play, BookOpen, Lightbulb, ClipboardCheck } from "lucide-react";
+import { useSound } from "@/hooks/useSound";
 
 export default function PetunjukPage() {
+  const { playClick } = useSound();
   const steps = [
     { num: 1, text: "Mulai petualangan belajarmu dari Halaman Dashboard.", icon: Play },
     { num: 2, text: "Pilih menu Materi untuk mempelajari konsep dasar keamanan siber.", icon: BookOpen },
@@ -28,6 +32,7 @@ export default function PetunjukPage() {
 
         <Link
           href="/dashboard"
+          onClick={playClick}
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-white hover:bg-slate-50 text-[#17324D] text-sm font-bold border-2 border-slate-200 hover:border-blue-400 shadow-md hover:shadow-lg transition-all hover:scale-105 group"
         >
           <ArrowLeft className="w-4 h-4 text-blue-600 group-hover:-translate-x-1 transition-transform" />
@@ -65,6 +70,7 @@ export default function PetunjukPage() {
         <div className="pt-6 border-t border-slate-100 flex justify-center">
           <Link
             href="/dashboard"
+            onClick={playClick}
             className="px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-lg transition-all hover:scale-105"
           >
             Saya Paham, Mulai Belajar Sekarang!

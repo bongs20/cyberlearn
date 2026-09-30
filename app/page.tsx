@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { Shield, Lock, Laptop, ArrowRight, BookOpenCheck, Sparkles } from "lucide-react";
 import WelcomeAudio from "@/components/WelcomeAudio";
+import { useSound } from "@/hooks/useSound";
 
 export default function LandingPage() {
+  const { playClick } = useSound();
+
   return (
     <div className="space-y-16 py-4 sm:py-8">
       
@@ -51,6 +56,7 @@ export default function LandingPage() {
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
               <Link
                 href="/dashboard"
+                onClick={playClick}
                 className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-slate-950 font-extrabold text-base shadow-xl hover:shadow-cyan-500/25 transition-all hover:scale-105 flex items-center justify-center gap-3 group"
               >
                 <span>MULAI BELAJAR</span>
@@ -59,6 +65,7 @@ export default function LandingPage() {
 
               <Link
                 href="/petunjuk"
+                onClick={playClick}
                 className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm backdrop-blur-md transition-all flex items-center justify-center gap-2"
               >
                 <BookOpenCheck className="w-4 h-4 text-cyan-300" />

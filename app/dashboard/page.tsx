@@ -5,8 +5,10 @@ import Link from "next/link";
 import LearningCard from "@/components/LearningCard";
 import ProgressBar from "@/components/ProgressBar";
 import { CircleHelp, BookOpen, PlayCircle, ClipboardCheck, Award, Home } from "lucide-react";
+import { useSound } from "@/hooks/useSound";
 
 export default function DashboardPage() {
+  const { playClick } = useSound();
   const [progress, setProgress] = useState({
     materiPercent: 0,
     casesSolved: 0,
@@ -47,6 +49,7 @@ export default function DashboardPage() {
             </span>
             <Link
               href="/"
+              onClick={playClick}
               className="text-xs font-semibold text-blue-200 hover:text-white bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full border border-white/10 transition-colors inline-flex items-center gap-1"
             >
               <Home className="w-3 h-3 text-cyan-300" />

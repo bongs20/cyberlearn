@@ -3,11 +3,13 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ScoreCard from "@/components/ScoreCard";
+import { useSound } from "@/hooks/useSound";
 
 export default function HasilPage() {
   const [score, setScore] = useState<number | null>(null);
   const [correctCount, setCorrectCount] = useState<number>(0);
   const router = useRouter();
+  const { playClick } = useSound();
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
@@ -24,6 +26,7 @@ export default function HasilPage() {
   }, []);
 
   const handleRetry = () => {
+    playClick();
     router.push("/kuis");
   };
 
@@ -35,7 +38,7 @@ export default function HasilPage() {
           Kamu belum mengerjakan kuis evaluasi. Silakan kerjakan kuis terlebih dahulu untuk melihat nilai.
         </p>
         <button
-          onClick={() => router.push("/kuis")}
+          onClick={() => { playClick(); router.push("/kuis"); }}
           className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md transition-all"
         >
           Kerjakan Kuis Sekarang

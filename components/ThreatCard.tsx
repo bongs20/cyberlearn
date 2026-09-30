@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { LucideIcon, ArrowRight } from "lucide-react";
+import { useSound } from "@/hooks/useSound";
 
 interface ThreatCardProps {
   title: string;
@@ -19,6 +22,7 @@ export default function ThreatCard({
   icon: Icon,
   colorScheme = "blue",
 }: ThreatCardProps) {
+  const { playSelect } = useSound();
 
   const schemes = {
     blue: {
@@ -83,6 +87,7 @@ export default function ThreatCard({
 
       <Link
         href={`/materi/${slug}`}
+        onClick={playSelect}
         className={`inline-flex min-h-11 items-center justify-between font-semibold text-sm py-2 px-3.5 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors ${scheme.btn}`}
       >
         <span>Pelajari Selengkapnya</span>

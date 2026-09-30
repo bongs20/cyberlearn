@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { CaseStudy } from "@/data/cases";
 import { CheckCircle2, XCircle, HelpCircle, ArrowRight } from "lucide-react";
+import { useSound } from "@/hooks/useSound";
 
 interface CaseStudyCardProps {
   caseItem: CaseStudy;
@@ -12,27 +13,24 @@ interface CaseStudyCardProps {
 export default function CaseStudyCard({ caseItem, onSolved }: CaseStudyCardProps) {
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
-  const correctAudioRef = useRef<HTMLAudioElement | null>(null);
-  const wrongAudioRef = useRef<HTMLAudioElement | null>(null);
-  const soundPlayedRef = useRef(false);
+  const { playSelect, playCorrect, playWrong, playClick } = useSound();
+
   const isCorrect = selectedOptionId === caseItem.correctOptionId;
 
   useEffect(() => {
-    if (!submitted || soundPlayedRef.current) return;
-
-    const audio = isCorrect
-      ? (correctAudioRef.current ??= new Audio("/audio/benar.mp3"))
-      : (wrongAudioRef.current ??= new Audio("/audio/salah.mp3"));
-
-    audio.currentTime = 0;
-    audio.volume = 0.5;
-    void audio.play().catch(() => undefined);
-    soundPlayedRef.current = true;
-  }, [submitted, isCorrect]);
+    if (!submitted) return;
+    if (isCorrect) {
+      playCorrect();
+    } else {
+      playWrong();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [submitted]);
 
   const handleSelect = (optionId: string) => {
-    if (submitted) return; // Prevent changing after submission
+    if (submitted) return;
     setSelectedOptionId(optionId);
+    playSelect();
   };
 
   const handleSubmit = () => {
@@ -44,11 +42,11 @@ export default function CaseStudyCard({ caseItem, onSolved }: CaseStudyCardProps
   const handleReset = () => {
     setSelectedOptionId(null);
     setSubmitted(false);
-    soundPlayedRef.current = false;
+    playClick();
   };
 
   return (
-    <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-md space-y-6">
+    <div className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8 border border-slate-200 shadow-md space-y-5 sm:space-y-6">
       
       {/* Category Badge & Title */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
@@ -61,7 +59,7 @@ export default function CaseStudyCard({ caseItem, onSolved }: CaseStudyCardProps
 
       {/* Title & Scenario */}
       <div>
-        <h3 className="text-xl font-bold text-[#17324D] mb-3">{caseItem.title}</h3>
+        <h3 className="text-lg sm:text-xl font-bold text-[#17324D] mb-3 break-words">{caseItem.title}</h3>
         <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80 text-sm text-slate-700 leading-relaxed">
           {caseItem.scenario}
         </div>
@@ -94,7 +92,7 @@ export default function CaseStudyCard({ caseItem, onSolved }: CaseStudyCardProps
               key={opt.id}
               onClick={() => handleSelect(opt.id)}
               disabled={submitted}
-              className={`w-full text-left p-4 rounded-xl border transition-all text-sm flex items-start justify-between gap-3 ${optionStyle}`}
+              className={`w-full text-left p-3 sm:p-4 rounded-xl border transition-all text-sm flex items-start justify-between gap-3 ${optionStyle}`}
             >
               <span>{opt.text}</span>
               {submitted && opt.id === caseItem.correctOptionId && (
@@ -110,11 +108,11 @@ export default function CaseStudyCard({ caseItem, onSolved }: CaseStudyCardProps
 
       {/* Submit Button / Feedback Result */}
       {!submitted ? (
-        <div className="pt-2 flex justify-end">
+        <div className="pt-2 flex justify-stretch sm:justify-end">
           <button
             onClick={handleSubmit}
             disabled={!selectedOptionId}
-            className={`px-6 py-3 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${
+            className={`w-full sm:w-auto justify-center px-6 py-3 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${
               selectedOptionId
                 ? "bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:scale-105 cursor-pointer"
                 : "bg-slate-200 text-slate-400 cursor-not-allowed"
@@ -137,12 +135,12 @@ export default function CaseStudyCard({ caseItem, onSolved }: CaseStudyCardProps
               {isCorrect ? (
                 <>
                   <CheckCircle2 className="w-6 h-6 text-emerald-600 flex-shrink-0" />
-                  <span className="text-emerald-900">Feedback: Penjelasan Jawaban Tepat 🎉</span>
+                  <span className="text-emerald-900 break-words">Feedback: Penjelasan Jawaban Tepat 🎉</span>
                 </>
               ) : (
                 <>
                   <XCircle className="w-6 h-6 text-amber-600 flex-shrink-0" />
-                  <span className="text-amber-900">Pembahasan: Penjelasan & Tips Keamanan 💡</span>
+                  <span className="text-amber-900 break-words">Pembahasan: Penjelasan &amp; Tips Keamanan 💡</span>
                 </>
               )}
             </div>
@@ -193,10 +191,10 @@ export default function CaseStudyCard({ caseItem, onSolved }: CaseStudyCardProps
             )}
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-stretch sm:justify-end">
             <button
               onClick={handleReset}
-              className="text-xs font-semibold text-blue-600 hover:text-blue-800 underline px-3 py-1.5 cursor-pointer"
+              className="w-full sm:w-auto text-center text-xs font-semibold text-blue-600 hover:text-blue-800 underline px-3 py-1.5 cursor-pointer"
             >
               Coba Lagi Kasus Ini
             </button>

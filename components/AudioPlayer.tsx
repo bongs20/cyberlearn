@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Volume2, VolumeX, Play, Pause, RefreshCw } from "lucide-react";
+import { useSound } from "@/hooks/useSound";
 
 interface AudioPlayerProps {
   audioPath?: string;
@@ -18,6 +19,7 @@ export default function AudioPlayer({
   const [isSpeechActive, setIsSpeechActive] = useState(false);
   const [isRealAudioPlaying, setIsRealAudioPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const { playPlay, playClick } = useSound();
 
   const stopAll = () => {
     if (audioRef.current) {
@@ -34,14 +36,15 @@ export default function AudioPlayer({
 
   useEffect(() => {
     const timeoutId = window.setTimeout(stopAll, 0);
-
     return () => window.clearTimeout(timeoutId);
   }, [audioPath, narrationText]);
 
   const togglePlay = () => {
     if (isPlaying) {
+      playClick();
       stopAll();
     } else {
+      playPlay();
       playAudio();
     }
   };
@@ -49,7 +52,6 @@ export default function AudioPlayer({
   const playAudio = () => {
     stopAll();
 
-    // Try HTML5 Audio element first if audioPath exists
     if (audioPath && audioRef.current) {
       audioRef.current.currentTime = 0;
       audioRef.current
@@ -131,12 +133,8 @@ export default function AudioPlayer({
         </div>
       </div>
 
-      {/* Play Controls & Enhancer Toggle */}
+      {/* Play Controls */}
       <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
-        
-        {/* Voice enhancement toggle removed per request */}
-
-        {/* Play / Pause Button */}
         <button
           onClick={togglePlay}
           className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all shadow-md cursor-pointer ${
@@ -160,7 +158,7 @@ export default function AudioPlayer({
 
         {isPlaying && (
           <button
-            onClick={stopAll}
+            onClick={() => { playClick(); stopAll(); }}
             className="p-2.5 rounded-xl bg-blue-800/80 hover:bg-blue-700 text-blue-200 cursor-pointer"
             title="Hentikan Audio"
           >

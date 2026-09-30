@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { PlayCircle, ShieldCheck, ExternalLink } from "lucide-react";
+import { useSound } from "@/hooks/useSound";
 
 const speakVideoTitle = (title: string, index: number) => {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) {
@@ -33,7 +34,7 @@ const DEFAULT_VIDEOS: VideoItem[] = [
     id: "1",
     title: "Mengenal Jenis Ancaman Siber & Keamanan Informasi",
     description: "Penjelasan komprehensif mengenai dasar ancaman siber di dunia modern, bagaimana hacker bekerja, dan prinsip dasar pertahanan diri.",
-    youtubeId: "inWWhr5tnEA", // Educational cybersecurity video placeholder
+    youtubeId: "inWWhr5tnEA",
     duration: "10:15",
   },
   {
@@ -68,9 +69,11 @@ const DEFAULT_VIDEOS: VideoItem[] = [
 
 export default function VideoPlayer() {
   const [activeVideo, setActiveVideo] = useState<VideoItem>(DEFAULT_VIDEOS[0]);
+  const { playSelect } = useSound();
 
   const handleSelectVideo = (video: VideoItem, index: number) => {
     setActiveVideo(video);
+    playSelect();
     speakVideoTitle(video.title, index);
   };
 

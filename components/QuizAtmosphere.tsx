@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { Play } from "lucide-react";
+import { useSound } from "@/hooks/useSound";
 
 interface QuizAtmosphereProps {
   hasStarted: boolean;
@@ -10,6 +11,7 @@ interface QuizAtmosphereProps {
 
 export default function QuizAtmosphere({ hasStarted, onStart }: QuizAtmosphereProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const { playClick } = useSound();
 
   const startMusic = () => {
     if (!audioRef.current) return;
@@ -20,6 +22,7 @@ export default function QuizAtmosphere({ hasStarted, onStart }: QuizAtmospherePr
   };
 
   const handleStart = () => {
+    playClick();
     startMusic();
     onStart();
   };

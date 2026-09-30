@@ -6,12 +6,14 @@ import Image from "next/image";
 import AudioPlayer from "@/components/AudioPlayer";
 import { ThreatMaterial } from "@/data/materials";
 import { ArrowLeft, Lightbulb, CheckCircle2, AlertTriangle, ShieldCheck, HelpCircle, Layers } from "lucide-react";
+import { useSound } from "@/hooks/useSound";
 
 interface ThreatDetailTemplateProps {
   material: ThreatMaterial;
 }
 
 export default function ThreatDetailTemplate({ material }: ThreatDetailTemplateProps) {
+  const { playClick, playSelect } = useSound();
   
   useEffect(() => {
     // Save progress in localStorage when user views detail page
@@ -52,6 +54,7 @@ export default function ThreatDetailTemplate({ material }: ThreatDetailTemplateP
         <div className="flex items-center gap-3">
           <Link
             href="/materi"
+            onClick={playClick}
             className="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-[#17324D] font-bold text-xs border border-slate-200 hover:border-blue-400 shadow-sm hover:shadow-md transition-all hover:scale-105 inline-flex items-center gap-2 group"
           >
             <ArrowLeft className="w-4 h-4 text-blue-600 group-hover:-translate-x-1 transition-transform" />
@@ -60,6 +63,7 @@ export default function ThreatDetailTemplate({ material }: ThreatDetailTemplateP
 
           <Link
             href={`/studi-kasus?category=${encodeURIComponent(material.title)}`}
+            onClick={playSelect}
             className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md transition-all hover:scale-105 inline-flex items-center gap-2"
           >
             <Lightbulb className="w-4 h-4 text-yellow-300" />
@@ -175,6 +179,7 @@ export default function ThreatDetailTemplate({ material }: ThreatDetailTemplateP
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-200">
         <Link
           href="/materi"
+          onClick={playClick}
           className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-white hover:bg-slate-50 text-[#17324D] font-bold text-sm border-2 border-slate-200 hover:border-blue-400 shadow-md hover:shadow-lg transition-all hover:scale-105 text-center flex items-center justify-center gap-2.5 group"
         >
           <ArrowLeft className="w-4 h-4 text-blue-600 group-hover:-translate-x-1 transition-transform" />
@@ -183,6 +188,7 @@ export default function ThreatDetailTemplate({ material }: ThreatDetailTemplateP
 
         <Link
           href={`/studi-kasus?category=${encodeURIComponent(material.title)}`}
+          onClick={playSelect}
           className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-lg transition-all hover:scale-105 text-center flex items-center justify-center gap-2"
         >
           <span>Uji Pemahaman Studi Kasus {material.title}</span>

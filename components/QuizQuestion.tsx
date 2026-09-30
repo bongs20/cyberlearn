@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { QuizQuestion as QuizQuestionType } from "@/data/questions";
 import { ArrowRight, HelpCircle } from "lucide-react";
+import { useSound } from "@/hooks/useSound";
 
 interface QuizQuestionProps {
   question: QuizQuestionType;
@@ -18,24 +19,18 @@ export default function QuizQuestion({
   onNext,
 }: QuizQuestionProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const answerSoundRef = useRef<HTMLAudioElement | null>(null);
+  const { playSelect, playClick } = useSound();
 
   const handleAnswerClick = (answerId: string) => {
-    if (!answerSoundRef.current) {
-      answerSoundRef.current = new Audio("/audio/kring.mp3");
-    }
-
-    answerSoundRef.current.currentTime = 0;
-    void answerSoundRef.current.play().catch(() => {
-      // Browser may block audio if the click is not treated as a user gesture.
-    });
     setSelectedId(answerId);
+    playSelect();
   };
 
   const handleNext = () => {
     if (!selectedId) return;
+    playClick();
     onNext(selectedId);
-    setSelectedId(null); // Reset selection for next question
+    setSelectedId(null);
   };
 
   return (

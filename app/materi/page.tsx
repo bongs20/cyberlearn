@@ -1,9 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import ThreatCard from "@/components/ThreatCard";
 import { BookOpen, ArrowLeft, ShieldAlert, KeyRound, Bug, Users } from "lucide-react";
 import { MATERIALS_DATA } from "@/data/materials";
+import { useSound } from "@/hooks/useSound";
 
 export default function MateriOverviewPage() {
+  const { playClick } = useSound();
+
   return (
     <div className="space-y-10 py-4">
       
@@ -22,6 +27,7 @@ export default function MateriOverviewPage() {
 
         <Link
           href="/dashboard"
+          onClick={playClick}
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-white hover:bg-slate-50 text-[#17324D] text-sm font-bold border-2 border-slate-200 hover:border-blue-400 shadow-md hover:shadow-lg transition-all hover:scale-105 flex-shrink-0 group"
         >
           <ArrowLeft className="w-4 h-4 text-blue-600 group-hover:-translate-x-1 transition-transform" />

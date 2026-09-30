@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { LucideIcon } from "lucide-react";
+import { useSound } from "@/hooks/useSound";
 
 interface LearningCardProps {
   title: string;
@@ -18,7 +21,8 @@ export default function LearningCard({
   badge,
   accentColor = "blue",
 }: LearningCardProps) {
-  
+  const { playSelect } = useSound();
+
   const accentClasses = {
     blue: "bg-blue-600/10 text-blue-600 group-hover:bg-blue-600 group-hover:text-white",
     cyan: "bg-cyan-500/10 text-cyan-700 group-hover:bg-cyan-500 group-hover:text-slate-950",
@@ -29,6 +33,7 @@ export default function LearningCard({
   return (
     <Link
       href={href}
+      onClick={playSelect}
       className="group relative bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 card-hover flex flex-col justify-between w-full"
     >
       {badge && (
