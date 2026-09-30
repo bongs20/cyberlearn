@@ -22,7 +22,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     id: 1,
     category: "Phishing",
-    title: "Kasus Phishing #1: Pesan Verifikasi Akun Bank",
+    title: "Kasus Phishing 1: Pesan Verifikasi Akun Bank",
     scenario: "Kamu menerima SMS/WhatsApp yang mengatasnamakan bank langgananmu. Pesan tersebut mengabarkan bahwa akunmu akan diblokir permanen dalam kurun waktu 1 jam jika tidak segera melakukan verifikasi ulang melalui tautan http://bca-verifikasi-online-aman.com. Apa tindakan terbaik yang sebaiknya kamu lakukan?",
     options: [
       { id: "A", text: "A. Langsung mengklik tautan tersebut dan memasukkan data akun agar tidak diblokir." },
@@ -48,7 +48,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     id: 2,
     category: "Phishing",
-    title: "Kasus Phishing #2: File APK Unduhan Kurir Paket",
+    title: "Kasus Phishing 2: File APK Unduhan Kurir Paket",
     scenario: "Kamu menerima pesan WhatsApp dari nomor asing yang mengaku kurir ekpedisi. Ia mengirimkan file bernama 'Lihat_Foto_Paket_Anda.apk' dan mendesakmu membukanya untuk mengonfirmasi lokasi rumahmu. Apa yang harus kamu lakukan?",
     options: [
       { id: "A", text: "A. Mengunduh dan menginstal file APK tersebut agar paket segera sampai." },
@@ -76,7 +76,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     id: 3,
     category: "Malware",
-    title: "Kasus Malware #1: Unduhan Software Bajakan",
+    title: "Kasus Malware 1: Unduhan Software Bajakan",
     scenario: "Budi ingin mengunduh aplikasi desain gratisan. Ia menemukan blog tidak dikenal yang menyediakan tombol unduh 'Photoshop_2024_Crack.exe'. Saat tombol diunduh, antivirus memberi peringatan Trojan perusak. Apa yang sebaiknya Budi lakukan?",
     options: [
       { id: "A", text: "A. Mematikan fitur antivirus dan tetap menginstal file executable tersebut." },
@@ -102,7 +102,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     id: 4,
     category: "Malware",
-    title: "Kasus Malware #2: Peringatan Pop-Up Virus Palsu",
+    title: "Kasus Malware 2: Peringatan Pop-Up Virus Palsu",
     scenario: "Saat browsing internet, tiba-tiba muncul jendela pop-up merah menyala yang berbunyi: 'PERINGATAN! HP Anda Terinfeksi 13 Virus! Klik di sini untuk menginstal Cleaner Pro sekarang juga!'. Apa tindakan yang benar?",
     options: [
       { id: "A", text: "A. Mengklik tombol unduh pop-up tersebut karena panik HP rusak." },
@@ -130,7 +130,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     id: 5,
     category: "Password Attack",
-    title: "Kasus Password Attack #1: Kebiasaan Kata Sandi Sama",
+    title: "Kasus Password Attack 1: Kebiasaan Kata Sandi Sama",
     scenario: "Siti menggunakan kata sandi 'Siti12345' untuk semua akunnya (Email, Medsos, & Portal Kampus). Suatu hari toko online tempat ia belanja mengalami kebocoran data. Apa ancaman terbesar dan tindakan terbaik bagi Siti?",
     options: [
       { id: "A", text: "A. Tidak ada masalah, peretas hanya bisa membuka toko online saja." },
@@ -156,7 +156,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     id: 6,
     category: "Password Attack",
-    title: "Kasus Password Attack #2: Bahaya Login di Wi-Fi Publik",
+    title: "Kasus Password Attack 2: Bahaya Login di Wi-Fi Publik",
     scenario: "Rian sedang berada di kafe dan menggunakan Wi-Fi gratisan bernama 'Free_Coffee_WiFi'. Ia hendak melakukan transaksi m-banking dan login ke akun email penting tanpa menggunakan VPN. Apa risiko keamanan yang dihadapi Rian?",
     options: [
       { id: "A", text: "A. Wi-Fi publik selalu aman 100% dari peretasan." },
@@ -184,7 +184,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     id: 7,
     category: "Social Engineering",
-    title: "Kasus Social Engineering #1: Telepon Penelepon Hadiah Palsu",
+    title: "Kasus Social Engineering 1: Telepon Penelepon Hadiah Palsu",
     scenario: "Rani menerima panggilan telepon dari seseorang yang mengaku Customer Service dompet digital. Penelepon mengabarkan Rani memenangkan hadiah Rp 5.000.000, tetapi meminta Rani menyebutkan 6 angka OTP yang baru masuk via SMS. Apa yang harus dilakukan Rani?",
     options: [
       { id: "A", text: "A. Langsung menyebutkan 6 angka OTP karena panggilan terasa meyakinkan." },
@@ -210,7 +210,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     id: 8,
     category: "Social Engineering",
-    title: "Kasus Social Engineering #2: Pura-Pura Teman Kampus Darurat",
+    title: "Kasus Social Engineering 2: Pura-Pura Teman Kampus Darurat",
     scenario: "Kamu menerima pesan dari akun Instagram teman dekatmu yang menulis: 'Bro, darurat banget nih! HP gue kena retas, boleh pinjem transfer Rp 500rb dulu gak ke rekening ini? Nanti malam tak ganti'. Apa langkah verifikasi terbaik?",
     options: [
       { id: "A", text: "A. Langsung mentransfer uang ke rekening tersebut karena merasa kasihan." },

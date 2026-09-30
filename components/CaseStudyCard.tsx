@@ -56,7 +56,7 @@ export default function CaseStudyCard({ caseItem, onSolved }: CaseStudyCardProps
           <HelpCircle className="w-3.5 h-3.5 text-blue-600" />
           Kategori: {caseItem.category}
         </span>
-        <span className="text-xs text-slate-500 font-medium">Studi Kasus #{caseItem.id}</span>
+        <span className="text-xs text-slate-500 font-medium">Studi Kasus {caseItem.id}</span>
       </div>
 
       {/* Title & Scenario */}
