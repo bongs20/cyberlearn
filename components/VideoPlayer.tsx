@@ -78,10 +78,47 @@ export default function VideoPlayer() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div className="flex flex-col lg:grid lg:grid-cols-3 gap-8">
       
-      {/* Main Video Embed Area */}
-      <div className="lg:col-span-2 space-y-4">
+      {/* Video Playlist Selector (Top on mobile, Right on Desktop) */}
+      <div className="order-1 lg:order-2 lg:col-span-1 space-y-4">
+        <h3 className="text-lg font-bold text-[#17324D] flex items-center gap-2">
+          <PlayCircle className="w-5 h-5 text-blue-600" />
+          Daftar Video Pembelajaran
+        </h3>
+
+        <div className="space-y-3">
+          {DEFAULT_VIDEOS.map((vid, idx) => {
+            const isSelected = vid.id === activeVideo.id;
+            return (
+              <button
+                key={vid.id}
+                onClick={() => handleSelectVideo(vid, idx)}
+                className={`w-full text-left p-4 rounded-xl border transition-all flex items-start gap-3.5 cursor-pointer ${
+                  isSelected
+                    ? "bg-blue-600 text-white border-blue-600 shadow-lg scale-[1.02]"
+                    : "bg-white text-slate-800 border-slate-200 hover:border-blue-400 hover:bg-slate-50"
+                }`}
+              >
+                <div className={`mt-0.5 p-2 rounded-lg font-bold text-xs ${isSelected ? "bg-white/20 text-cyan-300" : "bg-blue-100 text-blue-800"}`}>
+                  0{idx + 1}
+                </div>
+                <div className="space-y-1">
+                  <h4 className={`text-sm font-semibold line-clamp-2 ${isSelected ? "text-white" : "text-[#17324D]"}`}>
+                    {vid.title}
+                  </h4>
+                  <p className={`text-xs ${isSelected ? "text-blue-100" : "text-slate-500"}`}>
+                    Durasi: {vid.duration}
+                  </p>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Main Video Embed Area (Bottom on mobile, Left on Desktop) */}
+      <div className="order-2 lg:order-1 lg:col-span-2 space-y-4">
         <div className="relative aspect-video w-full bg-slate-900 rounded-2xl overflow-hidden shadow-xl border border-slate-700">
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${activeVideo.youtubeId}?autoplay=0&rel=0`}
@@ -116,43 +153,6 @@ export default function VideoPlayer() {
               <ExternalLink className="w-3 h-3" />
             </a>
           </div>
-        </div>
-      </div>
-
-      {/* Video Playlist Selector */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-bold text-[#17324D] flex items-center gap-2">
-          <PlayCircle className="w-5 h-5 text-blue-600" />
-          Daftar Video Pembelajaran
-        </h3>
-
-        <div className="space-y-3">
-          {DEFAULT_VIDEOS.map((vid, idx) => {
-            const isSelected = vid.id === activeVideo.id;
-            return (
-              <button
-                key={vid.id}
-                onClick={() => handleSelectVideo(vid, idx)}
-                className={`w-full text-left p-4 rounded-xl border transition-all flex items-start gap-3.5 ${
-                  isSelected
-                    ? "bg-blue-600 text-white border-blue-600 shadow-lg scale-[1.02]"
-                    : "bg-white text-slate-800 border-slate-200 hover:border-blue-400 hover:bg-slate-50"
-                }`}
-              >
-                <div className={`mt-0.5 p-2 rounded-lg font-bold text-xs ${isSelected ? "bg-white/20 text-cyan-300" : "bg-blue-100 text-blue-800"}`}>
-                  0{idx + 1}
-                </div>
-                <div className="space-y-1">
-                  <h4 className={`text-sm font-semibold line-clamp-2 ${isSelected ? "text-white" : "text-[#17324D]"}`}>
-                    {vid.title}
-                  </h4>
-                  <p className={`text-xs ${isSelected ? "text-blue-100" : "text-slate-500"}`}>
-                    Durasi: {vid.duration}
-                  </p>
-                </div>
-              </button>
-            );
-          })}
         </div>
       </div>
 
