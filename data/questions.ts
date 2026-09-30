@@ -51,7 +51,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     question: "Serangan password dengan cara menebak kombinasi huruf dan angka secara otomatis hingga menemukan kata sandi yang tepat disebut...",
     options: [
       { id: "A", text: "A. Brute Force Attack" },
-      { id: "B", text: "B. Phishing Attack" },
+      { id: "B", text: "B. Password Attack" },
       { id: "C", text: "C. Social Engineering" },
       { id: "D", text: "D. Man-in-the-Middle Attack" }
     ],
