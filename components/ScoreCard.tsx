@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import confetti from "canvas-confetti";
-import { Trophy, RefreshCw, LayoutDashboard, CheckCircle, BookOpen } from "lucide-react";
+import { Trophy, RefreshCw, CheckCircle, Flag } from "lucide-react";
 import { useSound } from "@/hooks/useSound";
 
 interface ScoreCardProps {
@@ -20,6 +20,7 @@ export default function ScoreCard({
   onRetry,
 }: ScoreCardProps) {
   const { playComplete, playClick } = useSound();
+  const router = useRouter();
 
   useEffect(() => {
     if (score >= 75) {
@@ -29,9 +30,6 @@ export default function ScoreCard({
         origin: { y: 0.6 },
       });
     }
-
-    // Play complete sound effect
-    playComplete();
 
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       const message =
@@ -54,7 +52,6 @@ export default function ScoreCard({
         window.speechSynthesis.cancel();
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [score]);
 
   const getFeedback = (scoreVal: number) => {
@@ -86,6 +83,14 @@ export default function ScoreCard({
   };
 
   const feedback = getFeedback(score);
+
+  const handleFinish = () => {
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("cyberlearn_evaluation_completed", "true");
+    }
+    playComplete();
+    router.push("/selesai");
+  };
 
   return (
     <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-2xl text-center max-w-2xl mx-auto space-y-8 animate-in zoom-in-95 duration-300">
@@ -134,30 +139,26 @@ export default function ScoreCard({
       {/* Action Buttons */}
       <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
         <button
-          onClick={() => { playClick(); onRetry(); }}
+          onClick={() => {
+            playClick();
+            if (typeof window !== "undefined") {
+              sessionStorage.removeItem("cyberlearn_evaluation_completed");
+            }
+            onRetry();
+          }}
           className="w-full sm:w-auto px-6 py-3.5 rounded-xl font-bold text-sm bg-blue-600 hover:bg-blue-700 text-white shadow-lg transition-all hover:scale-105 flex items-center justify-center gap-2"
         >
           <RefreshCw className="w-4 h-4" />
           <span>Ulangi Kuis</span>
         </button>
 
-        <Link
-          href="/materi"
-          onClick={playClick}
-          className="w-full sm:w-auto px-6 py-3.5 rounded-xl font-bold text-sm bg-slate-100 hover:bg-slate-200 text-slate-800 transition-all flex items-center justify-center gap-2"
+        <button
+          onClick={handleFinish}
+          className="w-full sm:w-auto px-6 py-3.5 rounded-xl font-bold text-sm bg-[#17324D] hover:bg-slate-900 text-white shadow-md transition-all hover:scale-105 flex items-center justify-center gap-2"
         >
-          <BookOpen className="w-4 h-4" />
-          <span>Pelajari Materi Lagi</span>
-        </Link>
-
-        <Link
-          href="/dashboard"
-          onClick={playClick}
-          className="w-full sm:w-auto px-6 py-3.5 rounded-xl font-bold text-sm bg-[#17324D] hover:bg-slate-900 text-white shadow-md transition-all flex items-center justify-center gap-2"
-        >
-          <LayoutDashboard className="w-4 h-4 text-cyan-400" />
-          <span>Kembali ke Dashboard</span>
-        </Link>
+          <Flag className="w-4 h-4 text-cyan-400" />
+          <span>Selesai</span>
+        </button>
       </div>
 
     </div>
