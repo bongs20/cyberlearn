@@ -222,6 +222,44 @@
   animation: cyberFloatVivid3 6.5s ease-in-out infinite;
 }
 
+/* Background Cyber Light Blobs & Grid Movement */
+@keyframes cyberBlobDrift {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(45px, -50px) scale(1.12);
+  }
+  66% {
+    transform: translate(-35px, 30px) scale(0.92);
+  }
+}
+
+@keyframes cyberGridScroll {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 40px 40px;
+  }
+}
+
+.animate-cyber-blob-1 {
+  animation: cyberBlobDrift 16s ease-in-out infinite;
+}
+
+.animate-cyber-blob-2 {
+  animation: cyberBlobDrift 22s ease-in-out infinite reverse;
+}
+
+.animate-cyber-blob-3 {
+  animation: cyberBlobDrift 18s ease-in-out infinite 3s;
+}
+
+.animate-cyber-grid {
+  animation: cyberGridScroll 25s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .material-visual,
   .material-image,

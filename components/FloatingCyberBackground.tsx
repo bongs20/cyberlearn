@@ -99,6 +99,36 @@ export default function FloatingCyberBackground({ preset }: FloatingCyberBackgro
       className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none"
       aria-hidden="true"
     >
+      {/* Dynamic Animated Ambient Light Blobs */}
+      <div
+        className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] rounded-full animate-cyber-blob-1 opacity-25 mix-blend-multiply filter blur-3xl pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(34, 211, 238, 0.8) 0%, rgba(37, 99, 235, 0.4) 60%, transparent 100%)",
+        }}
+      />
+      <div
+        className="absolute top-[35%] right-[-10%] w-[45vw] h-[45vw] max-w-[550px] max-h-[550px] rounded-full animate-cyber-blob-2 opacity-20 mix-blend-multiply filter blur-3xl pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(167, 139, 250, 0.8) 0%, rgba(37, 99, 235, 0.3) 60%, transparent 100%)",
+        }}
+      />
+      <div
+        className="absolute bottom-[-10%] left-[20%] w-[55vw] h-[55vw] max-w-[650px] max-h-[650px] rounded-full animate-cyber-blob-3 opacity-25 mix-blend-multiply filter blur-3xl pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(0, 212, 255, 0.7) 0%, rgba(247, 215, 116, 0.3) 60%, transparent 100%)",
+        }}
+      />
+
+      {/* Moving Cyber Grid Dots Pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.18] animate-cyber-grid pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(rgba(37, 99, 235, 0.5) 1.2px, transparent 1.2px)",
+          backgroundSize: "32px 32px",
+        }}
+      />
+
+      {/* Floating Animated Cyber Emojis */}
       {currentItems.map((item, idx) => {
         return (
           <div
