@@ -10,10 +10,9 @@ interface WelcomeAudioProps {
 
 export default function WelcomeAudio({ audioPath }: WelcomeAudioProps) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [hasInteracted, setHasInteracted] = useState(false);
+  const [isAudioValid, setIsAudioValid] = useState(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { playClick, playPlay } = useSound();
-  const isSpeakingRef = useRef(false);
 
   const welcomeText =
     "Selamat datang di multimedia pembelajaran interaktif Mengenal Ancaman Siber. Mari belajar mengenali ancaman digital dan cara melindungi diri.";
@@ -26,89 +25,102 @@ export default function WelcomeAudio({ audioPath }: WelcomeAudioProps) {
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       window.speechSynthesis.cancel();
     }
-    isSpeakingRef.current = false;
     setIsPlaying(false);
   }, []);
 
-  const speakWelcome = useCallback(() => {
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  const speakWelcomeSync = useCallback(() => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+      alert("Fitur narasi suara tidak didukung di perangkat ini.");
+      return;
+    }
+
     window.speechSynthesis.cancel();
+    if (window.speechSynthesis.paused) {
+      window.speechSynthesis.resume();
+    }
 
     const utterance = new SpeechSynthesisUtterance(welcomeText);
     utterance.lang = "id-ID";
     utterance.rate = 0.95;
+    utterance.volume = 1.0;
+
+    const voices = window.speechSynthesis.getVoices();
+    const idVoice = voices.find((v) => v.lang.includes("id") || v.lang.includes("ID"));
+    if (idVoice) {
+      utterance.voice = idVoice;
+    }
 
     utterance.onstart = () => {
       setIsPlaying(true);
-      isSpeakingRef.current = true;
     };
 
     utterance.onend = () => {
       setIsPlaying(false);
-      isSpeakingRef.current = false;
     };
 
-    utterance.onerror = () => {
+    utterance.onerror = (e) => {
+      console.warn("Speech error:", e);
       setIsPlaying(false);
-      isSpeakingRef.current = false;
     };
 
     window.speechSynthesis.speak(utterance);
-  }, [welcomeText]);
-
-  const playWelcomeAudio = useCallback(() => {
-    stopAudio();
-
-    if (audioPath && audioRef.current) {
-      audioRef.current.currentTime = 0;
-      audioRef.current
-        .play()
-        .then(() => {
-          setIsPlaying(true);
-        })
-        .catch(() => {
-          // File invalid or autoplay blocked -> use TTS fallback
-          speakWelcome();
-        });
-    } else {
-      speakWelcome();
+    
+    if (window.speechSynthesis.paused) {
+      window.speechSynthesis.resume();
     }
-  }, [audioPath, speakWelcome, stopAudio]);
-
-  useEffect(() => {
-    const handleFirstGesture = () => {
-      if (hasInteracted) return;
-      setHasInteracted(true);
-      playWelcomeAudio();
-    };
-
-    window.addEventListener("click", handleFirstGesture, { once: true });
-    window.addEventListener("keydown", handleFirstGesture, { once: true });
-    window.addEventListener("touchstart", handleFirstGesture, { once: true });
-
-    return () => {
-      stopAudio();
-      window.removeEventListener("click", handleFirstGesture);
-      window.removeEventListener("keydown", handleFirstGesture);
-      window.removeEventListener("touchstart", handleFirstGesture);
-    };
-  }, [hasInteracted, playWelcomeAudio, stopAudio]);
+  }, [welcomeText]);
 
   const handleToggle = () => {
     if (isPlaying) {
       playClick();
       stopAudio();
+      return;
+    }
+
+    playPlay();
+
+    if (!isAudioValid || !audioPath) {
+      speakWelcomeSync();
+      return;
+    }
+
+    const audio = audioRef.current;
+    if (audio) {
+      audio.currentTime = 0;
+      audio
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch(() => {
+          speakWelcomeSync();
+        });
     } else {
-      playPlay();
-      playWelcomeAudio();
+      speakWelcomeSync();
     }
   };
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.getVoices();
+      if (window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.onvoiceschanged = () => {
+          window.speechSynthesis.getVoices();
+        };
+      }
+    }
+
+    return () => {
+      stopAudio();
+    };
+  }, [stopAudio]);
 
   return (
     <div className="w-full max-w-4xl mx-auto my-4 px-2">
       <audio
         ref={audioRef}
         src={audioPath}
+        onError={() => setIsAudioValid(false)}
         onEnded={() => setIsPlaying(false)}
         preload="auto"
         className="hidden"
@@ -129,7 +141,7 @@ export default function WelcomeAudio({ audioPath }: WelcomeAudioProps) {
             <p className="text-xs text-blue-200">
               {isPlaying
                 ? "Sedang memutar suara penjelasan sambutan..."
-                : "Klik tombol untuk mendengarkan narasi suara sambutan"}
+                : "Tekan tombol untuk mendengarkan narasi suara sambutan di HP"}
             </p>
           </div>
         </div>
@@ -158,4 +170,5 @@ export default function WelcomeAudio({ audioPath }: WelcomeAudioProps) {
     </div>
   );
 }
+
 
